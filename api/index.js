@@ -7,7 +7,13 @@ import { configs } from './src/configs/index.js';
 import { dbConnect } from './src/modals/instance.js';
 import { clientRoutes, generalRoutes, managementRoutes, salesRoutes } from './src/routes/index.js';
 
+/* DATA IMPORTS */
+import User from './src/modals/user.model.js';
+import { dataUser } from './src/data/index.js';
+
 const app = express();
+
+/* CONFIGURATION */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
@@ -26,6 +32,9 @@ app.listen(configs.port, async () => {
     await dbConnect();
     console.log('DB connection success! 🚀');
     console.log(`APP listening to PORT: ${configs.port}! 🚀`);
+
+    /* ONLY ADD DATA ONE TIME */
+    // User.insertMany(dataUser);
   } catch (error) {
     console.error(error);
   }
